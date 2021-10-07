@@ -35,7 +35,7 @@ This code is provided for To_DO APP Testing Scenario . Your  testing environment
 5. in reports-> we are mainiting code for extend report but i have used testNG surefire Report->indexHtml.
 6. in Testinitializer -> BasePage->   maintaining all kind of synchronization methods and all Utility methods.
 7.  in in Testinitializer -> BrowserConfigation-> mainating which browser need to use- chrome/firefox and head or headless etc.
-8.POM.XMl- For all project level dependencies  
+8.   POM.XMl- For all project level dependencies  
 
 ### Resources
 
