@@ -1,4 +1,4 @@
-package com.aera.hotwire.testInitializer;
+package com.aera.toDoApp.testInitializer;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,7 +22,7 @@ public class BasePage {
     }
 
     protected void implicitilyWait(int num){
-        driver.manage().timeouts().implicitlyWait(num, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     protected void waitForElementToAppear(WebElement element) {

@@ -1,17 +1,19 @@
-package com.aera.hotwire.testInitializer;
+package com.aera.toDoApp.testInitializer;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import com.aera.hotwire.reports.Reporter;
+import com.aera.toDoApp.reports.Reporter;
 import org.testng.annotations.*;
-
-import java.util.concurrent.TimeUnit;
 
 public class BrowserConfiguration {
     public static WebDriver driver;
+
+    /*File file = new File(System.getProperty("user.dir") + "/chromedriver_win32/chromedriver.exe");
+    String chromepath = file.getAbsolutePath();
+        System.out.println("PAth " + chromepath);
+
+ System.setProperty("webdriver.chrome.driver", chromepath);*/
     private static void setChromeDriverProperty(){
        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Ashish Sharma\\Downloads\\hotwireTest-master\\chromedriver_win32\\chromedriver.exe");
     }

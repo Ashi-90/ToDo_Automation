@@ -1,29 +1,22 @@
-package com.aera.hotwire.application;
+package com.aera.toDoApp.application;
 
-import com.aera.hotwire.testInitializer.BasePage;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
-import org.testng.Assert;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-import static com.aera.hotwire.application.Hotwire.findADealBtn;
+import static com.aera.toDoApp.testInitializer.BrowserConfiguration.driver;
 
-public class ToDo_App extends BasePage {
+
+public class ToDo_App {
 
     public ToDo_App(WebDriver driver) throws Exception {
-        super(driver);
-        this.driver = driver;
+      //  WebDriver driver = new ChromeDriver();
         PageFactory.initElements(driver, this);
     }
 
@@ -46,54 +39,70 @@ public class ToDo_App extends BasePage {
     @FindBy(how = How.XPATH, using = "//button[@class='clear-completed']")
     static WebElement clearItems;
 
+
     @FindBy(how = How.XPATH, using = "//input[contains(@class,'edit')]")
     static WebElement editItem;
+
 
     @FindBy(how = How.XPATH, using = "//ul/li[*]/div/label")
     static WebElement selectList;
 
-    @FindBy(how = How.XPATH, using = "//label[contains(text(),'Test1')]")
+    @FindBy(how = How.XPATH, using = "//label[contains(text(),'Test2')]")
     static WebElement txtBoxElement;
 
 
+    public void addItem() throws InterruptedException {
+        List<String> list = new ArrayList<>();
+       // waitForElementToAppear(homePage);
 
-
-    public void toDOTask() throws Exception {
-        waitForElementToAppear(homePage);
-
-        waitForElementToEnable(toDoTextBox);
-        Thread.sleep(9000);
+       // waitForElementToEnable(toDoTextBox);
+        Thread.sleep(4000);
         // Navigating to the TODO Text box
         toDoTextBox.click();
        /* JavascriptExecutor executor = (JavascriptExecutor)driver;
         executor.executeScript("arguments[0].click();", toDoTextBox);*/
         // Entering  First item  to the TODO Text box
         toDoTextBox.sendKeys("Test1");
+        list.add("Test1");
         toDoTextBox.sendKeys(Keys.RETURN);
         Thread.sleep(6000);
         toDoTextBox.click();
         // Entering  Second  item  to the TODO Text box
+        duplicate(list, "Test2");
+        list.add("Test2");
         toDoTextBox.sendKeys("Test2");
         toDoTextBox.sendKeys(Keys.RETURN);
         Thread.sleep(6000);
         toDoTextBox.click();
         // Entering  Third   item  to the TODO Text box
+        duplicate(list, "Test3");
+        list.add("Test3");
+        toDoTextBox.sendKeys("Test3");
+        toDoTextBox.sendKeys(Keys.RETURN);
+        Thread.sleep(6000);
+        duplicate(list, "Test3");
+        list.add("Test3");
         toDoTextBox.sendKeys("Test3");
         toDoTextBox.sendKeys(Keys.RETURN);
         Thread.sleep(6000);
 
-
         selectList.click();
+    }
+
+
+    public void itemVerification() throws InterruptedException {
+
+
         //Verify  user can see  added Items in List same as expected
-        WebElement wbelement=driver.findElement(By.xpath("//ul[@class='todo-list']"));
+        WebElement wbelement = driver.findElement(By.xpath("//ul[@class='todo-list']"));
         List<WebElement> allItems = wbelement.findElements(By.xpath("//ul/li[*]/div/label"));
         List<String> allItemsFind = new ArrayList<String>();
         System.out.println(allItems.size());
         for (int k = 1; k <= allItems.size(); k++) {
 
-            allItemsFind.add(driver.findElement(By.xpath("/html[1]/body[1]/todo-app[1]/section[1]/section[1]/ul[1]/li["+k+"]/div[1]/label[1]")).getText());
+            allItemsFind.add(driver.findElement(By.xpath("/html[1]/body[1]/todo-app[1]/section[1]/section[1]/ul[1]/li[" + k + "]/div[1]/label[1]")).getText());
         }
-        String[] expected = {"Test1","Test2","Test3"};
+        String[] expected = {"Test1", "Test2", "Test3", "Test3"};
 // Verify  you found the right number of elements
         if (expected.length != allItems.size()) {
             System.out.println("fail, wrong number of elements found");
@@ -109,7 +118,6 @@ public class ToDo_App extends BasePage {
         }
 
 
-
         /*WebElement wbelement=driver.findElement(By.xpath("//ul[@class='todo-list']"));
         List<WebElement> elements = wbelement.findElements(By.xpath("//ul/li[*]/div/label"));
         for(int i=0;i<elements.size();i++){
@@ -121,9 +129,8 @@ public class ToDo_App extends BasePage {
 
         // Verify User can delete the item from list
 
-        if ( !driver.findElement(By.xpath("//label[contains(text(),'Test1')]")).isSelected() )
-        {
-            driver.findElement(By.id("//label[contains(text(),'Test1')]")).click();
+        if (!driver.findElement(By.xpath("(//input[@class='toggle'])[1]")).isSelected()) {
+            driver.findElement(By.xpath("(//input[@class='toggle'])[1]")).click();
         }
         deleteItem.click();
 
@@ -131,23 +138,38 @@ public class ToDo_App extends BasePage {
 
         //Verify User can edit to do items by double clicking on added item
 
-        Actions builder=new Actions(driver);
-        Action a=builder.moveToElement(txtBoxElement).doubleClick(txtBoxElement).build();
+        Actions builder = new Actions(driver);
+        Action a = builder.moveToElement(txtBoxElement).doubleClick(txtBoxElement).build();
         a.perform();
+
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();", editItem);
+        executor.executeScript("arguments[0].value='TestNew';", editItem);
+
+        Thread.sleep(3000);
+
+
+        // txtBoxElement.sendKeys("Testnew");
+        // editItem.sendKeys(Keys.RETURN);
         Thread.sleep(6000);
 
-        txtBoxElement.clear();
-        txtBoxElement.sendKeys("Testnew");
-        txtBoxElement.sendKeys(Keys.RETURN);
-        Thread.sleep(6000);
-
-   // Verify user not allowed to  add items consisting only of whitespaces
+        // Verify user not allowed to  add items consisting only of whitespaces
         toDoTextBox.sendKeys(Keys.SPACE);
         toDoTextBox.sendKeys(Keys.RETURN);
         Thread.sleep(6000);
 
+        //Verify count
+        /*WebElement wbelement=driver.findElement(By.xpath("//ul[@class='todo-list']"));
+        List<WebElement> allItems = wbelement.findElements(By.xpath("//ul/li[*]/div/label"));
+        List<String> allItemsFind = new ArrayList<String>();
+        System.out.println(allItems.size());*/
+    }
 
-
-
+    public void duplicate(List<String> str, String item) {
+        for (int i = 0; i < str.size(); i++) {
+            if (str.get(i) == item)
+                System.out.println("Duplicate should not be added " + item);
+//            Assert.fail("Duplicate");
+        }
     }
 }

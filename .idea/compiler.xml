@@ -7,7 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="hotwire" />
-        <module name="hotwireTest-master" />
+        <module name="ToDoTest-master" />
       </profile>
     </annotationProcessing>
   </component>

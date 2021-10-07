@@ -5,9 +5,10 @@
     <parameter name="headLess" value="false"/>
     <test name="Parameter Test one">
         <classes>
-            <class name="com.aera.hotwire.test.HotwireTest">
+            <class name="com.aera.todoapp.test.ToDoAppTest">
                 <methods>
-                    <include name="searchResult" />
+                    <include name="addItem"/>
+                    <include name="itemVerification"/>
                 </methods>
             </class>
         </classes>
